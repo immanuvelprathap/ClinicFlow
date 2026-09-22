@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ClinicFlow — Startup Pitch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{--ink:#10233a;--acc:#0f7b8a;--acc2:#e8a33d;--bg:#f6f9fb;--muted:#5b6b7c;--card:#fff;--red:#c0392b;--green:#1e8e5a}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0b1622;font-family:"Segoe UI",Inter,Helvetica,Arial,sans-serif;color:var(--ink)}
+.deck{position:relative;width:100vw;height:100vh;height:100dvh;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:56px 84px 72px;background:var(--bg)}
+.slide.active{display:flex;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide.dark{background:linear-gradient(135deg,#0f2a44,#0f7b8a);color:#fff}
+.slide.dark .muted{color:#cfe3ea}
+.slide.dark h1,.slide.dark h2{color:#fff}
+h1{font-size:64px;margin:0 0 12px;line-height:1.05}
+h2{font-size:40px;margin:0 0 22px;color:var(--acc)}
+h3{font-size:22px;margin:0 0 8px}
+p,li{font-size:22px;line-height:1.45}
+.muted{color:var(--muted)}
+.tag{display:inline-block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:10px}
+.dark .tag{color:var(--acc2)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1;align-items:center}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;flex:1;align-content:center}
+.card{background:var(--card);border-radius:14px;padding:22px 26px;box-shadow:0 6px 24px rgba(16,35,58,.08)}
+.card h3{color:var(--acc)}
+.big{font-size:72px;font-weight:800;color:var(--acc);line-height:1}
+.dark .big{color:var(--acc2)}
+.footer{position:absolute;left:84px;right:84px;bottom:22px;display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.dark .footer{color:#cfe3ea}
+.time{background:var(--acc2);color:#10233a;font-weight:700;padding:2px 10px;border-radius:999px}
+table{border-collapse:collapse;width:100%;font-size:19px;background:#fff;border-radius:10px;overflow:hidden}
+th,td{padding:9px 12px;border-bottom:1px solid #e6ecf1;text-align:left}
+th{background:#e7f3f5;color:var(--acc)}
+.bad td{color:var(--red)}
+.ok{color:var(--green);font-weight:700}
+.btn{font:inherit;font-size:20px;padding:12px 22px;border:0;border-radius:10px;background:var(--acc);color:#fff;cursor:pointer;margin-right:10px}
+.btn.alt{background:var(--acc2);color:#10233a}
+.grid{display:grid;grid-template-columns:110px repeat(4,1fr);gap:6px;margin-top:16px}
+.grid div{background:#fff;border-radius:8px;padding:10px;min-height:52px;font-size:17px;border:1px solid #e0e7ee}
+.grid .hd{background:#e7f3f5;font-weight:700;color:var(--acc);text-align:center}
+.grid .appt{background:#fff6e5;border-color:var(--acc2);font-weight:600}
+.grid .appt.ecg{background:#e3f4f6;border-color:var(--acc)}
+.flow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0}
+.flow .box{flex:1;background:#fff;border:2px solid var(--acc);border-radius:12px;padding:16px;text-align:center;font-size:19px;font-weight:600}
+.flow .arrow{font-size:34px;color:var(--acc)}
+.bar{height:26px;background:var(--acc);border-radius:6px;color:#fff;font-size:15px;line-height:26px;padding-left:8px;white-space:nowrap}
+.bar.b2{background:#3a9aa7}.bar.b3{background:var(--acc2);color:#10233a}
+.barrow{display:grid;grid-template-columns:170px 1fr;align-items:center;gap:12px;margin:8px 0;font-size:18px}
+.nav{position:fixed;right:22px;bottom:18px;display:flex;gap:8px;z-index:9}
+.nav button{background:rgba(255,255,255,.85);border:0;border-radius:8px;padding:6px 12px;font-size:16px;cursor:pointer}
+.counter{position:fixed;left:22px;bottom:18px;color:#9fb3c4;font-size:14px;z-index:9}
+.small{font-size:16px}
+ul{margin:6px 0;padding-left:26px}
+.warn{background:#fff3e0;border-left:6px solid var(--acc2);padding:12px 16px;border-radius:8px;font-size:19px}
+pre{background:#10233a;color:#dfe9f3;border-radius:10px;padding:14px 18px;font-size:17px;line-height:1.35;margin:0}
+.notes{display:none;position:fixed;left:0;right:0;bottom:0;background:#111;color:#eee;padding:12px 84px;font-size:17px;z-index:20;border-top:2px solid var(--acc2)}
+.notes.show{display:block}
+/* ---- tablet / phone ---- */
+.slide{overflow-y:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:1100px){
+  .slide{padding:34px 34px 90px}
+  h1{font-size:clamp(36px,8vw,56px)} h2{font-size:clamp(24px,4.6vw,34px);margin-bottom:14px} h3{font-size:19px}
+  p,li{font-size:clamp(15px,2.4vw,19px)} .big{font-size:clamp(40px,8vw,56px)}
+  .cols,.cols3{display:flex;flex-direction:column;gap:16px;align-items:stretch;flex:none}
+  .card{padding:16px 18px}
+  .flow{flex-direction:column} .flow .arrow{transform:rotate(90deg)}
+  .footer{position:static;margin-top:auto;padding-top:18px}
+  table,th,td{font-size:15px} th,td{padding:7px 8px}
+  .grid{grid-template-columns:80px repeat(4,1fr);gap:4px} .grid div{padding:6px;font-size:13px;min-height:44px}
+  .barrow{grid-template-columns:120px 1fr;font-size:15px} .bar{font-size:12px}
+  pre{font-size:13px;white-space:pre-wrap}
+  .btn{font-size:17px;padding:12px 16px;margin-bottom:8px}
+  .nav button{padding:12px 18px;font-size:20px}
+  .notes{padding:12px 20px;font-size:15px}
+}
+@media (max-width:1100px) and (orientation:landscape){
+  .cols{display:grid;grid-template-columns:1fr 1fr}
+}
+@media print{.slide{display:flex!important;position:relative;height:100vh;page-break-after:always}.nav,.counter,.notes{display:none!important}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 1 Title -->
+<section class="slide dark" data-notes="Hook: one coordinator, 30 appointments, 5 doctors, 4 rooms. Say the one-sentence version.">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="tag">Intro to AI · Semester Project · AI Startup Studio</div>
+    <h1>ClinicFlow</h1>
+    <p style="font-size:30px;max-width:900px">Conflict-free clinic schedules in seconds — powered by Constraint Satisfaction, not spreadsheets.</p>
+    <p class="muted" style="margin-top:40px">Team [names] · University of Bern · HS 2026</p>
+    <p class="muted small">Swipe or use ▶ to advance · tap “Notes” for speaker notes</p>
+  </div>
+  <div class="footer"><span>ClinicFlow</span><span class="time">0:00</span></div>
+</section>
+
+<!-- 2 Problem -->
+<section class="slide" data-notes="Who hurts: the coordinator. Rules interact; a good early choice can make the whole day impossible later.">
+  <div class="tag">The problem</div>
+  <h2>Scheduling a clinic day is a puzzle that fights back</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Doctors with different specialties and hours</li>
+        <li>Rooms with special equipment (ECG, ultrasound)</li>
+        <li>Patients who can only come at certain times</li>
+        <li>No double-booked doctors, no double-booked rooms</li>
+      </ul>
+      <div class="warn" style="margin-top:20px">Placing one appointment is easy. Placing <b>all 30</b> so that <b>every</b> rule holds is where spreadsheets break.</div>
+    </div>
+    <div class="card">
+      <h3>Today at a small clinic</h3>
+      <p class="muted">Coordinator builds the day by hand in Excel / paper.</p>
+      <p><span class="big">~45 min</span><br><span class="muted">per day of manual juggling <i>[team estimate — validate with a clinic]</i></span></p>
+      <p><span class="big" style="font-size:44px">1 mistake</span><br><span class="muted">= a rescheduled patient, an idle room, or an angry doctor</span></p>
+    </div>
+  </div>
+  <div class="footer"><span>Problem</span><span class="time">0:00–0:40</span></div>
+</section>
+
+<!-- 3 Who hurts -->
+<section class="slide" data-notes="Size the pain. Numbers marked [verify] must be replaced with sourced figures before the final pitch.">
+  <div class="tag">Who hurts &amp; how big</div>
+  <h2>Small and mid-size outpatient clinics</h2>
+  <div class="cols3">
+    <div class="card"><div class="big">3–8</div><p>clinicians per practice — too small for hospital-grade planning software, too big for a paper plan</p></div>
+    <div class="card"><div class="big">[N]</div><p>group practices &amp; polyclinics in Switzerland <span class="small muted">[verify with FSO / FMH statistics]</span></p></div>
+    <div class="card"><div class="big">3</div><p>people affected by every clash: the patient (waits), the doctor (idle or overloaded), the coordinator (re-plans)</p></div>
+  </div>
+  <p class="muted">Primary user: the <b>clinic coordinator / front-desk lead</b>. Buyer: the practice owner.</p>
+  <div class="footer"><span>Who hurts</span><span class="time">0:40–1:20</span></div>
+</section>
+
+<!-- 4 Solution -->
+<section class="slide" data-notes="Plain language. Avoid jargon here; the algorithm slide comes later.">
+  <div class="tag">The solution</div>
+  <h2>Describe the rules. ClinicFlow finds a schedule that obeys all of them.</h2>
+  <div class="flow">
+    <div class="box">Doctors · Rooms<br>Patients · Rules</div><div class="arrow">→</div>
+    <div class="box">ClinicFlow<br><span class="small muted">constraint solver</span></div><div class="arrow">→</div>
+    <div class="box">Valid timetable<br><span class="small muted">or "impossible — here's why"</span></div>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>What you get</h3><ul><li>A conflict-free day plan in under a second</li><li>A clear "infeasible" verdict when the rules cannot all hold</li><li>Transparent reasoning — you can inspect every decision</li></ul></div>
+    <div class="card"><h3>What we deliberately don't do</h3><ul><li>No diagnosis, no medical decisions</li><li>No patient records, no hospital integration</li><li>No black box — every output is checkable</li></ul></div>
+  </div>
+  <div class="footer"><span>Solution</span><span class="time">1:20–1:55</span></div>
+</section>
+
+<!-- 5 Live demo -->
+<section class="slide" data-notes="Live demo (backup recording ready). Click Solve. Point out node counts. Then click Impossible case.">
+  <div class="tag">Live demo · BernCare Clinic</div>
+  <h2 style="margin-bottom:8px">7 patients · 3 doctors · 2 rooms · 4 slots</h2>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button class="btn" onclick="runDemo(false)">Solve (BT vs MRV+FC)</button>
+    <button class="btn alt" onclick="runDemo(true)">Load impossible case</button>
+    <span id="verdict" style="font-size:22px;margin-left:10px"></span>
+  </div>
+  <div class="cols" style="align-items:start;margin-top:8px">
+    <div>
+      <div class="grid" id="grid"></div>
+      <p class="small muted">Blue = ECG in Room 2 · Orange = general consultation</p>
+    </div>
+    <div>
+      <table id="stats"><thead><tr><th>Solver</th><th>Nodes</th><th>Backtracks</th><th>Status</th></tr></thead><tbody><tr><td colspan="4" class="muted">Press Solve…</td></tr></tbody></table>
+      <p class="small muted" style="margin-top:14px">Rules: Ben is the only cardiologist · ECG needs Room 2 · Clara works afternoons only (from 11) · each patient has a time window · one doctor / one room per slot. The solver in this slide is a real backtracking CSP solver running in your browser.</p>
+    </div>
+  </div>
+  <div class="footer"><span>Demo</span><span class="time">1:55–3:35</span></div>
+</section>
+
+<!-- 6 Why AI -->
+<section class="slide" data-notes="Course connection: CSP = variables + domains + constraints. Scheduling is the textbook CSP application (Lecture 04).">
+  <div class="tag">Why AI · why this technique</div>
+  <h2>It's a Constraint Satisfaction Problem</h2>
+  <div class="cols" style="align-items:start">
+    <div class="card">
+      <h3>Formal model</h3>
+      <pre>Variables   X_i  = assignment of appointment i
+Domains     D_i  = { (doctor, room, slot) } filtered by
+                   specialty · equipment · availability
+Constraints t_i = t_j  ⇒  doctor_i ≠ doctor_j
+            t_i = t_j  ⇒  room_i   ≠ room_j
+Goal        complete assignment satisfying all
+            constraints — or proof none exists</pre>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px"><h3>Why not if-statements?</h3><p class="small">An if-statement checks <i>one</i> rule for <i>one</i> appointment. We must find a <i>complete</i> combination across 30 appointments × doctors × rooms × slots — combinatorial search.</p></div>
+      <div class="card"><h3>Why not the other course tools?</h3><ul class="small" style="font-size:17px"><li><b>A* search</b> — no path, all variables assigned simultaneously</li><li><b>Bayesian nets</b> — nothing uncertain to infer</li><li><b>MDP</b> — no stochastic dynamics or rewards</li><li><b>CSP</b> — discrete variables, finite domains, hard constraints ✓</li></ul></div>
+    </div>
+  </div>
+  <div class="footer"><span>Why AI</span><span class="time">3:35–4:35</span></div>
+</section>
+
+<!-- 7 Algorithm -->
+<section class="slide" data-notes="Wedding-seating analogy: BT seats randomly; MRV seats difficult guests first; FC marks seats unavailable immediately.">
+  <div class="tag">How it works</div>
+  <h2>Backtracking → + MRV → + Forward Checking</h2>
+  <div class="cols3">
+    <div class="card"><h3>1 · Backtracking (BT)</h3><p class="small">Try a value. If a rule breaks later, go back and try another. Complete but slow.</p></div>
+    <div class="card"><h3>2 · Minimum Remaining Values</h3><p class="small">Schedule the appointment with the <b>fewest</b> options first ("hardest patient first"). Fail fast.</p></div>
+    <div class="card"><h3>3 · Forward Checking</h3><p class="small">After each assignment, immediately remove now-impossible options from every other appointment. Detect dead ends early.</p></div>
+  </div>
+  <p class="muted">All three are complete and provably correct; an independent validator re-checks every schedule. Stretch goal: arc consistency (AC-3).</p>
+  <div class="footer"><span>Algorithm</span><span class="time">3:35–4:35</span></div>
+</section>
+
+<!-- 8 Results -->
+<section class="slide" data-notes="Replace placeholder numbers with benchmark_results.csv. Emphasise orders-of-magnitude reduction and correct infeasibility detection.">
+  <div class="tag">Results</div>
+  <h2>Smarter search, same answers, far less work</h2>
+  <p class="muted small">Illustrative numbers for a 20-appointment tight instance — replace with measured results from <code>results/benchmark_results.csv</code>.</p>
+  <div class="cols" style="align-items:start">
+    <div>
+      <div class="barrow"><span>Backtracking</span><div class="bar" style="width:100%">18 420 nodes · 4 821 backtracks</div></div>
+      <div class="barrow"><span>BT + MRV</span><div class="bar b2" style="width:34%">6 100 · 1 500</div></div>
+      <div class="barrow"><span>BT + MRV + FC</span><div class="bar b3" style="width:7%">1 206 · 194</div></div>
+      <p class="small muted">Nodes explored (log-scale figure in the tech doc)</p>
+    </div>
+    <div class="card">
+      <h3>What the evaluation shows</h3>
+      <ul class="small" style="font-size:18px">
+        <li>All solvers agree on solved / infeasible for every instance</li>
+        <li>Every output passes the independent constraint validator</li>
+        <li>MRV + FC cut search effort by ~15× on tight instances</li>
+        <li>Impossible instances are detected, not silently "approximated"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer"><span>Results</span><span class="time">4:35–5:10</span></div>
+</section>
+
+<!-- 9 Users / why now -->
+<section class="slide" data-notes="Why now: digitised booking data exists; constraint solving is free and fast on a laptop; no enterprise software needed.">
+  <div class="tag">Who uses it · how it reaches them · why now</div>
+  <h2>A plug-in for the tools clinics already use</h2>
+  <div class="cols3">
+    <div class="card"><h3>User</h3><p class="small">Clinic coordinator: uploads the day's appointments and rules, gets a timetable, edits, re-solves.</p></div>
+    <div class="card"><h3>Go-to-market</h3><p class="small">Start as a spreadsheet/CSV companion; then integrate with practice-management &amp; online booking systems as an add-on.</p></div>
+    <div class="card"><h3>Why now</h3><p class="small">Booking data is finally digital in small practices; open constraint-solving runs in milliseconds on any laptop; staff shortages make coordinator time expensive.</p></div>
+  </div>
+  <div class="footer"><span>Adoption</span><span class="time">5:10–5:35</span></div>
+</section>
+
+<!-- 10 Limitations / next -->
+<section class="slide dark" data-notes="Be honest about limits; that earns credibility in Q&A.">
+  <div class="tag">Limitations &amp; what's next</div>
+  <h2>Honest scope today, clear path to V2</h2>
+  <div class="cols">
+    <div class="card" style="color:var(--ink)"><h3>POC limits</h3><ul class="small" style="font-size:18px"><li>Hard constraints only — no preferences or optimisation</li><li>One working day, fixed slot length</li><li>Synthetic (realistic) data, no live clinic yet</li><li>Exponential worst case — mitigated by MRV/FC and time caps</li></ul></div>
+    <div class="card" style="color:var(--ink)"><h3>V2</h3><ul class="small" style="font-size:18px"><li>Soft constraints &amp; preferences (weighted CSP / min-conflicts)</li><li>Multi-day and variable durations</li><li>Pilot with one real clinic</li><li>Import from existing booking systems</li></ul></div>
+  </div>
+  <p style="font-size:26px;margin-top:20px"><b>ClinicFlow:</b> describe the rules — get a schedule that keeps them. <span class="muted">Questions?</span></p>
+  <div class="footer"><span>Next steps</span><span class="time">5:35–6:00</span></div>
+</section>
+
+<!-- 11 Backup: Q&A -->
+<section class="slide" data-notes="Backup slide for Q&A.">
+  <div class="tag">Backup · Q&amp;A</div>
+  <h2>Questions every team member can answer</h2>
+  <div class="cols" style="align-items:start">
+    <ul>
+      <li><b>Why this problem?</b> Real, frequent, combinatorial; no medical risk.</li>
+      <li><b>Why CSP?</b> Discrete variables, finite domains, hard constraints; scheduling is the canonical CSP.</li>
+      <li><b>How is it formalised?</b> X_i per appointment; D_i ⊆ doctors × rooms × slots; binary no-clash constraints.</li>
+    </ul>
+    <ul>
+      <li><b>How does it work?</b> BT explores; MRV orders variables; FC prunes domains.</li>
+      <li><b>How do we know it's correct?</b> Independent validator, solver agreement, brute-force on small cases.</li>
+      <li><b>Limits?</b> Exponential worst case; hard constraints only; synthetic data.</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Backup</span><span></span></div>
+</section>
+
+</div>
+
+<div class="counter" id="counter"></div>
+<div class="nav"><button onclick="go(-1)">◀</button><button onclick="go(1)">▶</button><button onclick="toggleNotes()">Notes (N)</button></div>
+<div class="notes" id="notes"></div>
+
+<script>
+// ---------- deck navigation ----------
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+function show(i){cur=(i+slides.length)%slides.length;slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+  document.getElementById('notes').textContent=slides[cur].dataset.notes||'';location.hash=cur+1;}
+function go(d){show(cur+d)}
+function toggleNotes(){document.getElementById('notes').classList.toggle('show')}
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key))go(1);else if(['ArrowLeft','PageUp'].includes(e.key))go(-1);else if(e.key.toLowerCase()==='n')toggleNotes();});
+show(parseInt(location.hash.slice(1))-1||0);
+// touch swipe
+let tx=null,ty=null;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy))go(dx<0?1:-1);tx=ty=null;},{passive:true});
+
+// ---------- tiny CSP solver for the demo ----------
+const SLOTS=['09:00','10:00','11:00','13:00'];
+const DOCS=[{id:'Anna',spec:'general',av:['09:00','10:00','11:00','13:00']},{id:'Ben',spec:'cardiology',av:['09:00','10:00','11:00','13:00']},{id:'Clara',spec:'general',av:['11:00','13:00']}];
+const ROOMS=[{id:'R1',ecg:false},{id:'R2',ecg:true}];
+function instance(impossible){
+  const a=[
+    {id:'Sarah',spec:'general',ecg:false,win:['09:00','10:00']},
+    {id:'John',spec:'cardiology',ecg:true,win:['09:00','10:00','11:00']},
+    {id:'Maria',spec:'general',ecg:false,win:['10:00','11:00']},
+    {id:'David',spec:'cardiology',ecg:true,win:['11:00','13:00']},
+    {id:'Lisa',spec:'general',ecg:false,win:['13:00']},
+    {id:'Peter',spec:'general',ecg:false,win:['09:00','10:00','11:00']},
+    {id:'Nina',spec:'general',ecg:false,win:['10:00','11:00','13:00']}];
+  if(impossible){a[1].win=['09:00'];a[3].win=['09:00'];a.push({id:'Omar',spec:'cardiology',ecg:true,win:['09:00']});}
+  return a;
+}
+function domains(appts){return appts.map(ap=>{const d=[];for(const doc of DOCS)if(doc.spec===ap.spec)for(const r of ROOMS)if(!ap.ecg||r.ecg)for(const t of ap.win)if(doc.av.includes(t))d.push({doc:doc.id,room:r.id,t});return d;});}
+const ok=(v,w)=>!(v.t===w.t&&(v.doc===w.doc||v.room===w.room));
+function solve(appts,useMRV,useFC){
+  const n=appts.length;let stats={nodes:0,back:0};const assign=new Array(n).fill(null);
+  function rec(doms){
+    const un=[];for(let i=0;i<n;i++)if(!assign[i])un.push(i);
+    if(!un.length)return true;
+    let v=un[0];if(useMRV)v=un.reduce((b,i)=>doms[i].length<doms[b].length?i:b,un[0]);
+    for(const val of doms[v]){
+      stats.nodes++;
+      let consistent=true;for(let j=0;j<n;j++)if(assign[j]&&!ok(val,assign[j])){consistent=false;break;}
+      if(!consistent){stats.back++;continue;}
+      assign[v]=val;
+      let nd=doms;
+      if(useFC){nd=doms.map((d,j)=>(assign[j]||j===v)?d:d.filter(w=>ok(val,w)));
+        if(nd.some((d,j)=>!assign[j]&&j!==v&&!d.length)){assign[v]=null;stats.back++;continue;}}
+      if(rec(nd))return true;
+      assign[v]=null;stats.back++;
+    }
+    return false;
+  }
+  const found=rec(domains(appts));return {found,assign:[...assign],stats};
+}
+function runDemo(impossible){
+  const appts=instance(impossible);
+  const r1=solve(appts,false,false),r2=solve(appts,true,false),r3=solve(appts,true,true);
+  const tb=document.querySelector('#stats tbody');
+  const row=(name,r)=>`<tr><td>${name}</td><td>${r.stats.nodes}</td><td>${r.stats.back}</td><td class="${r.found?'ok':'bad'}">${r.found?'solved':'infeasible'}</td></tr>`;
+  tb.innerHTML=row('Backtracking',r1)+row('BT + MRV',r2)+row('BT + MRV + FC',r3);
+  const g=document.getElementById('grid');let h='<div class="hd">Room</div>'+SLOTS.map(s=>`<div class="hd">${s}</div>`).join('');
+  for(const r of ROOMS){h+=`<div class="hd">${r.id}${r.ecg?' (ECG)':''}</div>`;for(const s of SLOTS){const i=r3.assign.findIndex(v=>v&&v.room===r.id&&v.t===s);
+    h+=i>=0?`<div class="appt ${appts[i].ecg?'ecg':''}">${appts[i].id}<br><span class="small muted">${r3.assign[i].doc}</span></div>`:'<div></div>';}}
+  g.innerHTML=h;
+  document.getElementById('verdict').innerHTML=r3.found?'<span class="ok">✔ Valid schedule found</span>':'<span style="color:var(--red);font-weight:700">✖ No satisfying assignment exists (3 ECG appointments need Ben + Room 2 at 09:00)</span>';
+}
+</script>
+</body>
+</html>
