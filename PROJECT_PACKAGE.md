@@ -44,16 +44,17 @@ Abbreviations: **CSP** Constraint Satisfaction Problem · **BT** Backtracking ·
 
 ### 1b. Team charter (bottom half)
 
-| Member | Primary responsibility |
-|---|---|
-| `[Name 1]` — **logistics point of contact** | Problem definition, coordination, ILIAS submissions |
-| `[Name 2]` | CSP formalisation (variables, domains, constraints) |
-| `[Name 3]` | Solver algorithms (BT, MRV, FC, propagation) |
-| `[Name 4]` | Scenario/data generation and evaluation harness |
-| `[Name 5]` | Demo app (Streamlit) and integration / Devin ticket owner |
-| `[Name 6]` | Documentation, presentation, QA (merge with Name 1 if 5 members) |
+| Member | Charter area | Primary responsibility in ClinicFlow |
+|---|---|---|
+| **Katharina Kalbermatter** — logistics point of contact | Research | CSP formalisation (variables, domains, constraints), algorithm explanation from Lecture 04, deadlines/ILIAS submissions |
+| **Immanuvel Sagayaraju** | Technical development | Solvers (BT, MRV, FC, AC-3), tests, Streamlit demo, integration of everyone's work into `main` |
+| **Louis Gérard** | Evaluation | Scenario/data generation, benchmark harness, results tables and figures |
+| **Emma Jakobsson** | Documentation | Technical proposal, final technical documentation, QA against the rubric |
+| **Pranamya Kunjal** | Presentation | 6-minute pitch, demo script, Q&A preparation |
 
-**Meeting cadence.** `[e.g. Tuesdays 14:15–15:00 after lecture (in person) + Fridays 18:00 online, 30 min]`. Async on `[WhatsApp/Discord]`; code on `[GitHub org/repo]`. Each PR has one author and one human reviewer.
+Everyone owns one area but supports the others (see `TEAM_PLAN.md` for deliverables, acceptance criteria and weekly schedule).
+
+**Meeting cadence.** Approximately weekly (online or in person), with extra coordination before deadlines. Quick communication on WhatsApp; all project material on GitHub (`immanuvelprathap/ClinicFlow`). Each PR has one author and one reviewer.
 
 ---
 
@@ -186,23 +187,25 @@ Instance JSON shape:
 
 ---
 
-## 6. Engineering backlog (Devin tickets)
+## 6. Engineering backlog (status: implemented)
 
-Standing instruction for every ticket: *You are the implementation engineer for our Intro-to-AI semester project. The CSP formulation is owned by the team and must not be changed without approval. Use only techniques from the course; no LLMs, external optimisers or ML libraries. One ticket at a time; every ticket ships with tests, reproducible inputs and documented outputs. Optimise for correctness and inspectability, not product complexity. A team member reviews before merge.*
+Rules for every item: the CSP formulation is owned by the team and not changed without agreement; only techniques from the course (no LLMs, external optimisers or ML libraries); every item ships with tests, reproducible inputs and documented outputs; one team member reviews before merge.
 
-| # | Ticket | Acceptance criterion | Human reviewer |
+All items below are implemented in the repository (see §12 for file locations); owners now refine and document them.
+
+| # | Ticket | Acceptance criterion | Owner / reviewer |
 |---|---|---|---|
-| D01 | Repo scaffold + CI (pytest) | `pytest` runs green on empty suite; README explains setup | Name 5 |
-| D02 | `models.py` + JSON loader + `small_case.json` | Loads BernCare example; dataclasses typed; loader rejects malformed input | Name 2 |
-| D03 | `csp.py`: domain construction + constraints + `validate()` | Unit tests for C1–C7; `validate` accepts the hand-made solution and rejects 3 broken variants | Name 2 |
-| D04 | Naive backtracking solver + `SolverStats` | Solves small case; stats recorded; brute-force agreement on ≤ 6-appointment instances | Name 3 |
-| D05 | MRV (+ degree tie-break) | Same `status` as D04 on all data files; fewer or equal nodes on medium case | Name 3 |
-| D06 | Forward checking | Same `status`; domain-wipeout detected; fewer nodes than D05 on medium case | Name 3 |
-| D07 | Instance generator + `impossible_case.json` | Deterministic by seed; `tightness` parameter; impossible case proven infeasible by all solvers | Name 4 |
-| D08 | Benchmark runner + CSV + plots | Runs 3 solvers × 4 instances × 5 seeds; produces `benchmark_results.csv` and 2 PNG charts | Name 4 |
-| D09 | Streamlit app (3 tabs) | Load/edit instance → run → timetable grid → stats table; infeasible message shown for impossible case | Name 5 |
-| D10 | AC-3 / MAC (stretch) | Same `status`; nodes ≤ FC on large case | Name 3 |
-| D11 | Demo script + backup recording checklist | 2-minute scripted run reproducible from a fresh clone | Name 6 |
+| D01 | Repo scaffold + CI (pytest) | `pytest` runs green on empty suite; README explains setup | Immanuvel |
+| D02 | `models.py` + JSON loader + `small_case.json` | Loads BernCare example; dataclasses typed; loader rejects malformed input | Katharina |
+| D03 | `csp.py`: domain construction + constraints + `validate()` | Unit tests for C1–C7; `validate` accepts the hand-made solution and rejects 3 broken variants | Katharina |
+| D04 | Naive backtracking solver + `SolverStats` | Solves small case; stats recorded; brute-force agreement on ≤ 6-appointment instances | Immanuvel |
+| D05 | MRV (+ degree tie-break) | Same `status` as D04 on all data files; fewer or equal nodes on medium case | Immanuvel |
+| D06 | Forward checking | Same `status`; domain-wipeout detected; fewer nodes than D05 on medium case | Immanuvel |
+| D07 | Instance generator + `impossible_case.json` | Deterministic by seed; `tightness` parameter; impossible case proven infeasible by all solvers | Louis |
+| D08 | Benchmark runner + CSV + plots | Runs 3 solvers × 4 instances × 5 seeds; produces `benchmark_results.csv` and 2 PNG charts | Louis |
+| D09 | Streamlit app (3 tabs) | Load/edit instance → run → timetable grid → stats table; infeasible message shown for impossible case | Immanuvel |
+| D10 | AC-3 / MAC (stretch) | Same `status`; nodes ≤ FC on large case | Immanuvel |
+| D11 | Demo script + backup recording checklist | 2-minute scripted run reproducible from a fresh clone | Pranamya / Emma |
 
 ---
 
@@ -274,15 +277,36 @@ Q&A prep — every member must be able to answer: why this problem, why CSP, how
 
 ---
 
-## 12. This week (22–29 Sep)
+## 12. What is implemented (repository `immanuvelprathap/ClinicFlow`)
 
-| Day | Action |
-|---|---|
-| Tue 22 | Read rubric; share this package with the team |
-| Wed 23 | Each member brings ≤ 2 ideas; compare against ClinicFlow / PorterPath / SafeDelivery |
-| Thu 24 | Decide project; confirm AI-assistant policy with TA |
-| Fri 25 | Write Section 2 formalisation by hand as a team |
-| Sat 26 | Devin: feasibility ticket (D02–D04 on the 5-appointment example) |
-| Sun 27 | Review feasibility output |
-| Mon 28 | Freeze charter + pitch page |
-| Tue 29 | Submit on ILIAS |
+| Component | Where | Status |
+|---|---|---|
+| Data model + JSON loader | `src/clinicflow/models.py` | done |
+| Domains, binary constraints, independent validator | `src/clinicflow/csp.py` | done |
+| Solvers BT · BT+MRV · BT+FC · BT+MRV+FC · BT+MRV+MAC (AC-3) | `src/clinicflow/solvers/` | done |
+| Metrics (nodes, backtracks, checks, pruned values, runtime) + search trace | `src/clinicflow/metrics.py` | done |
+| Instances small (BernCare) / medium / large / impossible + seeded generator | `data/`, `src/clinicflow/generator.py` | done |
+| Benchmark runner → `results.csv` + log-scale chart | `benchmarks/run_benchmarks.py` | done |
+| CLI (`solve`, `compare`, `--trace`) | `python -m clinicflow` | done |
+| Streamlit demo (load → inspect CSP → solve → timetable, metrics, trace, infeasibility) | `app/streamlit_app.py` | done |
+| Tests (26) | `tests/` | green |
+| Pitch deck with in-browser demo | `index.html` | done — update after final benchmark |
+| Formalisation, algorithms, evaluation texts; proposal; tech doc; pitch script | `docs/` | **to write** (Katharina, Louis, Emma, Pranamya) |
+
+Measured results, large case (40 appointments, 6 doctors, 5 rooms, 16 slots):
+
+| Solver | Nodes | Backtracks | Runtime |
+|---|---|---|---|
+| BT | 209 873 | 209 833 | ~590 ms |
+| BT+MRV | 851 | 811 | ~2 ms |
+| BT+FC | 44 | 4 | ~7 ms |
+| BT+MRV+FC | 40 | 0 | ~10 ms |
+| BT+MRV+MAC | 40 | 0 | ~21 ms |
+
+Impossible case: all solvers report `infeasible`; FC detects it at node 1.
+
+**Links**
+
+- Pitch deck: https://immanuvelprathap.github.io/ClinicFlow/
+- Live Streamlit demo: https://immanuvelprathaps-clinicflow.streamlit.app *(deploy once on share.streamlit.io: New app → repo `immanuvelprathap/ClinicFlow` → branch `main` → file `app/streamlit_app.py`)*
+- Run locally: `pip install -e .[app,dev]` · `python -m clinicflow compare data/large_case.json` · `streamlit run app/streamlit_app.py`

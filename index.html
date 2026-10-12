@@ -92,7 +92,7 @@ pre{background:#10233a;color:#dfe9f3;border-radius:10px;padding:14px 18px;font-s
     <div class="tag">Intro to AI · Semester Project · AI Startup Studio</div>
     <h1>ClinicFlow</h1>
     <p style="font-size:30px;max-width:900px">Conflict-free clinic schedules in seconds — powered by Constraint Satisfaction, not spreadsheets.</p>
-    <p class="muted" style="margin-top:40px">Team [names] · University of Bern · HS 2026</p>
+    <p class="muted" style="margin-top:40px">Emma Jakobsson · Immanuvel Sagayaraju · Katharina Kalbermatter · Louis Gérard · Pranamya Kunjal<br>University of Bern · HS 2026</p>
     <p class="muted small">Swipe or use ▶ to advance · tap “Notes” for speaker notes</p>
   </div>
   <div class="footer"><span>ClinicFlow</span><span class="time">0:00</span></div>
@@ -154,7 +154,7 @@ pre{background:#10233a;color:#dfe9f3;border-radius:10px;padding:14px 18px;font-s
 <!-- 5 Live demo -->
 <section class="slide" data-notes="Live demo (backup recording ready). Click Solve. Point out node counts. Then click Impossible case.">
   <div class="tag">Live demo · BernCare Clinic</div>
-  <h2 style="margin-bottom:8px">7 patients · 3 doctors · 2 rooms · 4 slots</h2>
+  <h2 style="margin-bottom:8px">7 patients · 3 doctors · 2 rooms · 4 slots <span class="muted small" style="font-weight:400">(in-browser mini demo — full Streamlit app: <a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">live link</a>)</span></h2>
   <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
     <button class="btn" onclick="runDemo(false)">Solve (BT vs MRV+FC)</button>
     <button class="btn alt" onclick="runDemo(true)">Load impossible case</button>
@@ -210,24 +210,25 @@ Goal        complete assignment satisfying all
 </section>
 
 <!-- 8 Results -->
-<section class="slide" data-notes="Replace placeholder numbers with benchmark_results.csv. Emphasise orders-of-magnitude reduction and correct infeasibility detection.">
+<section class="slide" data-notes="Measured with benchmarks/run_benchmarks.py on the large case (40 appointments, 6 doctors, 5 rooms, 16 slots). Emphasise orders-of-magnitude reduction and correct infeasibility detection.">
   <div class="tag">Results</div>
   <h2>Smarter search, same answers, far less work</h2>
-  <p class="muted small">Illustrative numbers for a 20-appointment tight instance — replace with measured results from <code>results/benchmark_results.csv</code>.</p>
+  <p class="muted small">Measured on the large case: 40 appointments · 6 doctors · 5 rooms · 16 slots (<code>benchmarks/results/results.csv</code>). Same timetable from every solver.</p>
   <div class="cols" style="align-items:start">
     <div>
-      <div class="barrow"><span>Backtracking</span><div class="bar" style="width:100%">18 420 nodes · 4 821 backtracks</div></div>
-      <div class="barrow"><span>BT + MRV</span><div class="bar b2" style="width:34%">6 100 · 1 500</div></div>
-      <div class="barrow"><span>BT + MRV + FC</span><div class="bar b3" style="width:7%">1 206 · 194</div></div>
-      <p class="small muted">Nodes explored (log-scale figure in the tech doc)</p>
+      <div class="barrow"><span>Backtracking</span><div class="bar" style="width:100%">209 873 nodes · 209 833 backtracks · 590 ms</div></div>
+      <div class="barrow"><span>BT + MRV</span><div class="bar b2" style="width:38%">851 · 811 · 2 ms</div></div>
+      <div class="barrow"><span>BT + MRV + FC</span><div class="bar b3" style="width:16%">40 · 0 · 10 ms</div></div>
+      <p class="small muted">Bars on log scale · + AC-3 (MAC): also 40 nodes but 2× the constraint checks</p>
     </div>
     <div class="card">
       <h3>What the evaluation shows</h3>
       <ul class="small" style="font-size:18px">
         <li>All solvers agree on solved / infeasible for every instance</li>
         <li>Every output passes the independent constraint validator</li>
-        <li>MRV + FC cut search effort by ~15× on tight instances</li>
+        <li>MRV + FC cut search effort by &gt;5000× on the large case</li>
         <li>Impossible instances are detected, not silently "approximated"</li>
+        <li>Live demo: <a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">immanuvelprathaps-clinicflow.streamlit.app</a> · code: <a href="https://github.com/immanuvelprathap/ClinicFlow" target="_blank">github.com/immanuvelprathap/ClinicFlow</a></li>
       </ul>
     </div>
   </div>
@@ -256,6 +257,23 @@ Goal        complete assignment satisfying all
   </div>
   <p style="font-size:26px;margin-top:20px"><b>ClinicFlow:</b> describe the rules — get a schedule that keeps them. <span class="muted">Questions?</span></p>
   <div class="footer"><span>Next steps</span><span class="time">5:35–6:00</span></div>
+</section>
+
+<!-- Team -->
+<section class="slide" data-notes="One line each. Katharina is the contact person.">
+  <div class="tag">Team</div>
+  <h2>Five people, one owner per area</h2>
+  <div class="cols3">
+    <div class="card"><h3>Katharina Kalbermatter</h3><p class="small">Research · CSP formalisation, course link, logistics &amp; contact</p></div>
+    <div class="card"><h3>Immanuvel Sagayaraju</h3><p class="small">Technical · solvers, tests, Streamlit demo, integration</p></div>
+    <div class="card"><h3>Louis Gérard</h3><p class="small">Evaluation · scenarios, benchmarks, results</p></div>
+  </div>
+  <div class="cols3" style="margin-top:16px">
+    <div class="card"><h3>Emma Jakobsson</h3><p class="small">Documentation · proposal, technical documentation, QA</p></div>
+    <div class="card"><h3>Pranamya Kunjal</h3><p class="small">Presentation · pitch, demo script, Q&amp;A</p></div>
+    <div class="card"><h3>Try it</h3><p class="small"><a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">Live Streamlit demo</a><br><a href="https://github.com/immanuvelprathap/ClinicFlow" target="_blank">GitHub repository</a></p></div>
+  </div>
+  <div class="footer"><span>Team</span><span class="time">5:45–6:00</span></div>
 </section>
 
 <!-- 11 Backup: Q&A -->
