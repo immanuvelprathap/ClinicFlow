@@ -10,26 +10,26 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:#0b1622;font-family:"Segoe UI",Inter,Helvetica,Arial,sans-serif;color:var(--ink)}
 .deck{position:relative;width:100vw;height:100vh;height:100dvh;overflow:hidden}
-.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:56px 84px 72px;background:var(--bg)}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:56px 84px 20px;background:var(--bg)}
 .slide.active{display:flex;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .slide.dark{background:linear-gradient(135deg,#0f2a44,#0f7b8a);color:#fff}
 .slide.dark .muted{color:#cfe3ea}
 .slide.dark h1,.slide.dark h2{color:#fff}
-h1{font-size:64px;margin:0 0 12px;line-height:1.05}
-h2{font-size:40px;margin:0 0 22px;color:var(--acc)}
-h3{font-size:22px;margin:0 0 8px}
-p,li{font-size:22px;line-height:1.45}
+h1{font-size:clamp(40px,9vh,64px);margin:0 0 12px;line-height:1.05}
+h2{font-size:clamp(26px,5.2vh,40px);margin:0 0 16px;color:var(--acc)}
+h3{font-size:clamp(18px,3vh,22px);margin:0 0 8px}
+p,li{font-size:clamp(15px,2.9vh,22px);line-height:1.4}
 .muted{color:var(--muted)}
 .tag{display:inline-block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:10px}
 .dark .tag{color:var(--acc2)}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1;align-items:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vh,40px);flex:1;min-height:0;align-items:center}
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;flex:1;align-content:center}
-.card{background:var(--card);border-radius:14px;padding:22px 26px;box-shadow:0 6px 24px rgba(16,35,58,.08)}
+.card{background:var(--card);border-radius:14px;padding:clamp(14px,2.6vh,22px) clamp(16px,3vh,26px);box-shadow:0 6px 24px rgba(16,35,58,.08)}
 .card h3{color:var(--acc)}
-.big{font-size:72px;font-weight:800;color:var(--acc);line-height:1}
+.big{font-size:clamp(40px,9vh,72px);font-weight:800;color:var(--acc);line-height:1}
 .dark .big{color:var(--acc2)}
-.footer{position:absolute;left:84px;right:84px;bottom:22px;display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.footer{margin-top:auto;padding-top:14px;flex:none;display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
 .dark .footer{color:#cfe3ea}
 .time{background:var(--acc2);color:#10233a;font-weight:700;padding:2px 10px;border-radius:999px}
 table{border-collapse:collapse;width:100%;font-size:19px;background:#fff;border-radius:10px;overflow:hidden}
@@ -49,10 +49,15 @@ th{background:#e7f3f5;color:var(--acc)}
 .flow .arrow{font-size:34px;color:var(--acc)}
 .bar{height:26px;background:var(--acc);border-radius:6px;color:#fff;font-size:15px;line-height:26px;padding-left:8px;white-space:nowrap}
 .bar.b2{background:#3a9aa7}.bar.b3{background:var(--acc2);color:#10233a}
-.barrow{display:grid;grid-template-columns:170px 1fr;align-items:center;gap:12px;margin:8px 0;font-size:18px}
-.nav{position:fixed;right:22px;bottom:18px;display:flex;gap:8px;z-index:9}
-.nav button{background:rgba(255,255,255,.85);border:0;border-radius:8px;padding:6px 12px;font-size:16px;cursor:pointer}
-.counter{position:fixed;left:22px;bottom:18px;color:#9fb3c4;font-size:14px;z-index:9}
+.barrow{display:grid;grid-template-columns:170px 1fr;align-items:center;gap:12px;margin:10px 0;font-size:18px}
+.bartrack{display:flex;align-items:center;gap:10px}.bartrack .bar{flex:none;min-width:14px;padding:0}.barlbl{font-size:15px;color:var(--muted);white-space:nowrap}
+.nav{position:fixed;right:18px;top:14px;display:flex;align-items:center;gap:6px;z-index:9;background:rgba(16,35,58,.82);padding:6px 8px;border-radius:999px;backdrop-filter:blur(6px)}
+.nav button{background:transparent;color:#fff;border:0;border-radius:999px;padding:6px 12px;font-size:16px;cursor:pointer;line-height:1}
+.nav button:hover{background:rgba(255,255,255,.15)}
+.counter{color:#cfe3ea;font-size:14px;padding:0 6px;min-width:52px;text-align:center}
+.progress{position:fixed;left:0;bottom:0;height:4px;background:var(--acc2);z-index:9;transition:width .3s}
+.slide{padding-top:64px}
+.cols3.rows2{grid-template-rows:auto auto;align-content:center}
 .small{font-size:16px}
 ul{margin:6px 0;padding-left:26px}
 .warn{background:#fff3e0;border-left:6px solid var(--acc2);padding:12px 16px;border-radius:8px;font-size:19px}
@@ -68,19 +73,19 @@ pre{background:#10233a;color:#dfe9f3;border-radius:10px;padding:14px 18px;font-s
   .cols,.cols3{display:flex;flex-direction:column;gap:16px;align-items:stretch;flex:none}
   .card{padding:16px 18px}
   .flow{flex-direction:column} .flow .arrow{transform:rotate(90deg)}
-  .footer{position:static;margin-top:auto;padding-top:18px}
   table,th,td{font-size:15px} th,td{padding:7px 8px}
   .grid{grid-template-columns:80px repeat(4,1fr);gap:4px} .grid div{padding:6px;font-size:13px;min-height:44px}
-  .barrow{grid-template-columns:120px 1fr;font-size:15px} .bar{font-size:12px}
+  .barrow{grid-template-columns:110px 1fr;font-size:15px} .barlbl{font-size:13px}
   pre{font-size:13px;white-space:pre-wrap}
   .btn{font-size:17px;padding:12px 16px;margin-bottom:8px}
-  .nav button{padding:12px 18px;font-size:20px}
+  .nav button{padding:10px 14px;font-size:18px}
+  .slide{padding-top:70px}
   .notes{padding:12px 20px;font-size:15px}
 }
 @media (max-width:1100px) and (orientation:landscape){
   .cols{display:grid;grid-template-columns:1fr 1fr}
 }
-@media print{.slide{display:flex!important;position:relative;height:100vh;page-break-after:always}.nav,.counter,.notes{display:none!important}}
+@media print{.slide{display:flex!important;position:relative;height:100vh;page-break-after:always}.nav,.counter,.notes,.progress{display:none!important}}
 </style>
 </head>
 <body>
@@ -93,7 +98,7 @@ pre{background:#10233a;color:#dfe9f3;border-radius:10px;padding:14px 18px;font-s
     <h1>ClinicFlow</h1>
     <p style="font-size:30px;max-width:900px">Conflict-free clinic schedules in seconds — powered by Constraint Satisfaction, not spreadsheets.</p>
     <p class="muted" style="margin-top:40px">Emma Jakobsson · Immanuvel Sagayaraju · Katharina Kalbermatter · Louis Gérard · Pranamya Kunjal<br>University of Bern · HS 2026</p>
-    <p class="muted small">Swipe or use ▶ to advance · tap “Notes” for speaker notes</p>
+    <p class="muted small">Swipe, arrow keys or ▶ (top right) to advance · “Notes” shows speaker notes</p>
   </div>
   <div class="footer"><span>ClinicFlow</span><span class="time">0:00</span></div>
 </section>
@@ -154,11 +159,12 @@ pre{background:#10233a;color:#dfe9f3;border-radius:10px;padding:14px 18px;font-s
 <!-- 5 Live demo -->
 <section class="slide" data-notes="Live demo (backup recording ready). Click Solve. Point out node counts. Then click Impossible case.">
   <div class="tag">Live demo · BernCare Clinic</div>
-  <h2 style="margin-bottom:8px">7 patients · 3 doctors · 2 rooms · 4 slots <span class="muted small" style="font-weight:400">(in-browser mini demo — full Streamlit app: <a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">live link</a>)</span></h2>
+  <h2 style="margin-bottom:6px">7 patients · 3 doctors · 2 rooms · 4 slots</h2>
+  <p class="muted small" style="margin:0 0 12px">Mini solver running in this browser · full app: <a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">immanuvelprathaps-clinicflow.streamlit.app</a></p>
   <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
     <button class="btn" onclick="runDemo(false)">Solve (BT vs MRV+FC)</button>
     <button class="btn alt" onclick="runDemo(true)">Load impossible case</button>
-    <span id="verdict" style="font-size:22px;margin-left:10px"></span>
+    <span id="verdict" style="font-size:20px;font-weight:600"></span>
   </div>
   <div class="cols" style="align-items:start;margin-top:8px">
     <div>
@@ -213,13 +219,14 @@ Goal        complete assignment satisfying all
 <section class="slide" data-notes="Measured with benchmarks/run_benchmarks.py on the large case (40 appointments, 6 doctors, 5 rooms, 16 slots). Emphasise orders-of-magnitude reduction and correct infeasibility detection.">
   <div class="tag">Results</div>
   <h2>Smarter search, same answers, far less work</h2>
-  <p class="muted small">Measured on the large case: 40 appointments · 6 doctors · 5 rooms · 16 slots (<code>benchmarks/results/results.csv</code>). Same timetable from every solver.</p>
+  <p class="muted small">Large case: 40 appointments · 6 doctors · 5 rooms · 16 slots. Every solver returns a valid timetable.</p>
   <div class="cols" style="align-items:start">
     <div>
-      <div class="barrow"><span>Backtracking</span><div class="bar" style="width:100%">209 873 nodes · 209 833 backtracks · 590 ms</div></div>
-      <div class="barrow"><span>BT + MRV</span><div class="bar b2" style="width:38%">851 · 811 · 2 ms</div></div>
-      <div class="barrow"><span>BT + MRV + FC</span><div class="bar b3" style="width:16%">40 · 0 · 10 ms</div></div>
-      <p class="small muted">Bars on log scale · + AC-3 (MAC): also 40 nodes but 2× the constraint checks</p>
+      <div class="barrow"><span>Backtracking</span><div class="bartrack"><div class="bar" style="width:46%"></div><span class="barlbl">209 873 nodes · 590 ms</span></div></div>
+      <div class="barrow"><span>BT + MRV</span><div class="bartrack"><div class="bar b2" style="width:26%"></div><span class="barlbl">851 nodes · 2 ms</span></div></div>
+      <div class="barrow"><span>BT + MRV + FC</span><div class="bartrack"><div class="bar b3" style="width:14%"></div><span class="barlbl">40 nodes · 0 backtracks · 10 ms</span></div></div>
+      <p class="small muted">Bar length ∝ log(nodes) · adding AC-3 (MAC): also 40 nodes, but 2× the constraint checks</p>
+      <p class="small muted">Try it live: <a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">immanuvelprathaps-clinicflow.streamlit.app</a></p>
     </div>
     <div class="card">
       <h3>What the evaluation shows</h3>
@@ -228,7 +235,6 @@ Goal        complete assignment satisfying all
         <li>Every output passes the independent constraint validator</li>
         <li>MRV + FC cut search effort by &gt;5000× on the large case</li>
         <li>Impossible instances are detected, not silently "approximated"</li>
-        <li>Live demo: <a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">immanuvelprathaps-clinicflow.streamlit.app</a> · code: <a href="https://github.com/immanuvelprathap/ClinicFlow" target="_blank">github.com/immanuvelprathap/ClinicFlow</a></li>
       </ul>
     </div>
   </div>
@@ -263,17 +269,15 @@ Goal        complete assignment satisfying all
 <section class="slide" data-notes="One line each. Katharina is the contact person.">
   <div class="tag">Team</div>
   <h2>Five people, one owner per area</h2>
-  <div class="cols3">
+  <div class="cols3 rows2">
     <div class="card"><h3>Katharina Kalbermatter</h3><p class="small">Research · CSP formalisation, course link, logistics &amp; contact</p></div>
     <div class="card"><h3>Immanuvel Sagayaraju</h3><p class="small">Technical · solvers, tests, Streamlit demo, integration</p></div>
     <div class="card"><h3>Louis Gérard</h3><p class="small">Evaluation · scenarios, benchmarks, results</p></div>
-  </div>
-  <div class="cols3" style="margin-top:16px">
     <div class="card"><h3>Emma Jakobsson</h3><p class="small">Documentation · proposal, technical documentation, QA</p></div>
     <div class="card"><h3>Pranamya Kunjal</h3><p class="small">Presentation · pitch, demo script, Q&amp;A</p></div>
-    <div class="card"><h3>Try it</h3><p class="small"><a href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">Live Streamlit demo</a><br><a href="https://github.com/immanuvelprathap/ClinicFlow" target="_blank">GitHub repository</a></p></div>
+    <div class="card"><h3>Try it</h3><p class="small" style="margin:0"><a class="btn" style="display:inline-block;text-decoration:none;font-size:16px;padding:8px 14px;margin:4px 6px 4px 0" href="https://immanuvelprathaps-clinicflow.streamlit.app" target="_blank">Live demo</a><a class="btn alt" style="display:inline-block;text-decoration:none;font-size:16px;padding:8px 14px;margin:4px 0" href="https://github.com/immanuvelprathap/ClinicFlow" target="_blank">GitHub</a></p></div>
   </div>
-  <div class="footer"><span>Team</span><span class="time">5:45–6:00</span></div>
+  <div class="footer"><span>Team</span><span class="time">Q&amp;A</span></div>
 </section>
 
 <!-- 11 Backup: Q&A -->
@@ -297,15 +301,15 @@ Goal        complete assignment satisfying all
 
 </div>
 
-<div class="counter" id="counter"></div>
-<div class="nav"><button onclick="go(-1)">◀</button><button onclick="go(1)">▶</button><button onclick="toggleNotes()">Notes (N)</button></div>
+<div class="nav"><button onclick="go(-1)" aria-label="Previous">◀</button><span class="counter" id="counter"></span><button onclick="go(1)" aria-label="Next">▶</button><button onclick="toggleNotes()">Notes</button></div>
+<div class="progress" id="progress"></div>
 <div class="notes" id="notes"></div>
 
 <script>
 // ---------- deck navigation ----------
 const slides=[...document.querySelectorAll('.slide')];let cur=0;
 function show(i){cur=(i+slides.length)%slides.length;slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
-  document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+  document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
   document.getElementById('notes').textContent=slides[cur].dataset.notes||'';location.hash=cur+1;}
 function go(d){show(cur+d)}
 function toggleNotes(){document.getElementById('notes').classList.toggle('show')}
