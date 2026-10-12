@@ -308,5 +308,5 @@ Impossible case: all solvers report `infeasible`; FC detects it at node 1.
 **Links**
 
 - Pitch deck: https://immanuvelprathap.github.io/ClinicFlow/
-- Live Streamlit demo: https://immanuvelprathap-clinicflow.streamlit.app *(deploy once on share.streamlit.io: New app → repo `immanuvelprathap/ClinicFlow` → branch `main` → file `app/streamlit_app.py`)*
+- Live Streamlit demo: https://immanuvelprathaps-clinicflow.streamlit.app *(deploy once on share.streamlit.io: New app → repo `immanuvelprathap/ClinicFlow` → branch `main` → file `app/streamlit_app.py`)*
 - Run locally: `pip install -e .[app,dev]` · `python -m clinicflow compare data/large_case.json` · `streamlit run app/streamlit_app.py`
