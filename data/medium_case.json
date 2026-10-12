@@ -1,0 +1,581 @@
+{
+  "name": "medium_case",
+  "description": "Generated with seed=1, tightness=0.5",
+  "slots": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "slot_labels": {
+    "0": "08:00",
+    "1": "08:30",
+    "2": "09:00",
+    "3": "09:30",
+    "4": "10:00",
+    "5": "10:30",
+    "6": "11:00",
+    "7": "11:30",
+    "8": "12:00",
+    "9": "12:30",
+    "10": "13:00",
+    "11": "13:30",
+    "12": "14:00",
+    "13": "14:30",
+    "14": "15:00",
+    "15": "15:30"
+  },
+  "doctors": [
+    {
+      "id": "D1",
+      "name": "Dr. A",
+      "specialty": "general",
+      "available_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "id": "D2",
+      "name": "Dr. B",
+      "specialty": "cardiology",
+      "available_slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "id": "D3",
+      "name": "Dr. C",
+      "specialty": "dermatology",
+      "available_slots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "id": "D4",
+      "name": "Dr. D",
+      "specialty": "orthopedics",
+      "available_slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "D5",
+      "name": "Dr. E",
+      "specialty": "pediatrics",
+      "available_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "id": "R1",
+      "name": "Room 1",
+      "equipment": [
+        "dermatoscope"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "Room 2",
+      "equipment": [
+        "xray"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "Room 3",
+      "equipment": [
+        "xray"
+      ]
+    },
+    {
+      "id": "R4",
+      "name": "Room 4",
+      "equipment": [
+        "dermatoscope",
+        "ecg"
+      ]
+    }
+  ],
+  "appointments": [
+    {
+      "id": "A01",
+      "patient": "P007",
+      "specialty": "general",
+      "allowed_slots": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A02",
+      "patient": "P009",
+      "specialty": "general",
+      "allowed_slots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A03",
+      "patient": "P005",
+      "specialty": "cardiology",
+      "allowed_slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A04",
+      "patient": "P002",
+      "specialty": "general",
+      "allowed_slots": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A05",
+      "patient": "P002",
+      "specialty": "cardiology",
+      "allowed_slots": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A06",
+      "patient": "P007",
+      "specialty": "dermatology",
+      "allowed_slots": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A07",
+      "patient": "P010",
+      "specialty": "pediatrics",
+      "allowed_slots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A08",
+      "patient": "P001",
+      "specialty": "orthopedics",
+      "allowed_slots": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_equipment": [
+        "xray"
+      ]
+    },
+    {
+      "id": "A09",
+      "patient": "P003",
+      "specialty": "orthopedics",
+      "allowed_slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_equipment": [
+        "xray"
+      ]
+    },
+    {
+      "id": "A10",
+      "patient": "P012",
+      "specialty": "dermatology",
+      "allowed_slots": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A11",
+      "patient": "P009",
+      "specialty": "dermatology",
+      "allowed_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A12",
+      "patient": "P005",
+      "specialty": "orthopedics",
+      "allowed_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "required_equipment": [
+        "xray"
+      ]
+    },
+    {
+      "id": "A13",
+      "patient": "P003",
+      "specialty": "pediatrics",
+      "allowed_slots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A14",
+      "patient": "P009",
+      "specialty": "pediatrics",
+      "allowed_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A15",
+      "patient": "P010",
+      "specialty": "pediatrics",
+      "allowed_slots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A16",
+      "patient": "P010",
+      "specialty": "dermatology",
+      "allowed_slots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A17",
+      "patient": "P009",
+      "specialty": "general",
+      "allowed_slots": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A18",
+      "patient": "P006",
+      "specialty": "pediatrics",
+      "allowed_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A19",
+      "patient": "P006",
+      "specialty": "pediatrics",
+      "allowed_slots": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_equipment": []
+    },
+    {
+      "id": "A20",
+      "patient": "P001",
+      "specialty": "orthopedics",
+      "allowed_slots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_equipment": [
+        "xray"
+      ]
+    }
+  ]
+}

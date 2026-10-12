@@ -1,0 +1,21 @@
+{
+  "name": "BernCare impossible case",
+  "description": "Three ECG cardiology patients all restricted to 09:00 with one cardiologist and one ECG room: provably infeasible.",
+  "slots": [0, 1, 2, 3],
+  "slot_labels": {"0": "08:00", "1": "08:30", "2": "09:00", "3": "09:30"},
+  "doctors": [
+    {"id": "D1", "name": "Dr. Anna", "specialty": "general", "available_slots": [0, 1, 2, 3]},
+    {"id": "D2", "name": "Dr. Ben", "specialty": "cardiology", "available_slots": [0, 1, 2, 3]}
+  ],
+  "rooms": [
+    {"id": "R1", "name": "Room 1", "equipment": []},
+    {"id": "R2", "name": "Room 2 (ECG)", "equipment": ["ecg"]}
+  ],
+  "appointments": [
+    {"id": "A01", "patient": "John", "specialty": "cardiology", "allowed_slots": [2], "required_equipment": ["ecg"]},
+    {"id": "A02", "patient": "Maria", "specialty": "cardiology", "allowed_slots": [2], "required_equipment": ["ecg"]},
+    {"id": "A03", "patient": "Omar", "specialty": "cardiology", "allowed_slots": [2], "required_equipment": ["ecg"]},
+    {"id": "A04", "patient": "Sara", "specialty": "general", "allowed_slots": [0, 1, 2, 3]},
+    {"id": "A05", "patient": "Nina", "specialty": "general", "allowed_slots": [0, 1]}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "BernCare small case",
+  "description": "Hand-built 8-appointment morning at BernCare Clinic. Used in the pitch deck and tests.",
+  "slots": [0, 1, 2, 3, 4, 5, 6, 7],
+  "slot_labels": {"0": "08:00", "1": "08:30", "2": "09:00", "3": "09:30", "4": "10:00", "5": "10:30", "6": "11:00", "7": "11:30"},
+  "doctors": [
+    {"id": "D1", "name": "Dr. Anna", "specialty": "general", "available_slots": [0, 1, 2, 3, 4, 5, 6, 7]},
+    {"id": "D2", "name": "Dr. Ben", "specialty": "cardiology", "available_slots": [2, 3, 4, 5, 6, 7]},
+    {"id": "D3", "name": "Dr. Clara", "specialty": "general", "available_slots": [4, 5, 6, 7]},
+    {"id": "D4", "name": "Dr. Dan", "specialty": "dermatology", "available_slots": [0, 1, 2, 3]}
+  ],
+  "rooms": [
+    {"id": "R1", "name": "Room 1", "equipment": []},
+    {"id": "R2", "name": "Room 2 (ECG)", "equipment": ["ecg"]},
+    {"id": "R3", "name": "Room 3", "equipment": ["dermatoscope"]}
+  ],
+  "appointments": [
+    {"id": "A01", "patient": "John", "specialty": "cardiology", "allowed_slots": [2, 3], "required_equipment": ["ecg"]},
+    {"id": "A02", "patient": "Maria", "specialty": "cardiology", "allowed_slots": [2, 3, 4], "required_equipment": ["ecg"]},
+    {"id": "A03", "patient": "Keller", "specialty": "general", "allowed_slots": [5, 6, 7]},
+    {"id": "A04", "patient": "Sara", "specialty": "general", "allowed_slots": [0, 1, 2, 3]},
+    {"id": "A05", "patient": "Luis", "specialty": "dermatology", "allowed_slots": [0, 1, 2], "required_equipment": ["dermatoscope"]},
+    {"id": "A06", "patient": "Nina", "specialty": "general", "allowed_slots": [4, 5]},
+    {"id": "A07", "patient": "Omar", "specialty": "cardiology", "allowed_slots": [4, 5, 6], "required_equipment": ["ecg"]},
+    {"id": "A08", "patient": "Keller", "specialty": "dermatology", "allowed_slots": [1, 2, 3], "required_equipment": ["dermatoscope"]}
+  ]
+}
