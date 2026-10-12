@@ -2,7 +2,9 @@
 
 > Course: Introduction to AI (Uni Bern) — "AI Startup Studio" team project (20 % of grade).
 > Rubric: technical depth 30 · POC functionality 20 · pitch 20 · tech doc 15 · proposal 10 · team process 5.
-> Roles below are **proposed**; replace `Member 1..6` with real names from the Team Charter.
+> Team (from the Team Charter): Emma Jakobsson, Immanuvel Sagayaraju, Katharina Kalbermatter, Louis Gérard, Pranamya Kunjal.
+> Charter areas → plan: Technical development = Immanuvel · Research = Katharina (also logistics/contact) · Evaluation = Louis · Documentation = Emma · Presentation = Pranamya.
+> Everyone owns one area but supports the others (as agreed in the charter).
 
 ## 0. How we work (applies to everyone)
 
@@ -16,57 +18,49 @@
 
 ## 1. Roles, deliverables, acceptance criteria
 
-### Member 1 — Product owner & coordination (also presents the pitch)
-**Does:** owns the one-sentence problem, the "who hurts / why now" story, the Team Charter, the timeline, and the demo script. Runs the weekly sync and the mid-build check-in.
-**Produces:** Team Charter (Phase 1), `docs/pitch_script.md` (6-min, timed), final slide deck (`index.html` already exists — update numbers), check-in demo script.
-**Done when:** pitch rehearsed twice under 6 min; every slide answers a rubric line; check-in demo runs from a clean clone in < 5 min.
-**Depends on:** results numbers from Member 4, UI from Member 5.
+### Pranamya — Presentation (pitch owner)
+**Does:** owns the startup story (problem, who hurts, why now, how it reaches users), the 6-minute pitch, the demo script for the mid-build check-in and final day.
+**Produces:** `docs/pitch_script.md` (timed), final deck (`index.html` exists — update results numbers and team slide), check-in demo script, Q&A answer sheet.
+**Done when:** pitch rehearsed twice under 6 min; every slide answers a rubric line; demo runs from a clean clone in < 5 min.
+**Depends on:** Louis's results numbers, Immanuvel's UI.
 
-### Member 2 — CSP formalisation (the "math" of the project)
-**Does:** writes the formal model: variables, domains, unary vs binary constraints, constraint graph, size of the search space, why it is a CSP and not search/MDP/Bayes. Owns `src/clinicflow/csp.py` and the validator.
-**Produces:** `docs/formalisation.md` (2 pages, with the notation used in the proposal + tech doc), `csp.py`, `tests/test_constraints.py`.
-**Done when:** every constraint in the doc maps 1-to-1 to a line in `build_domains` / `conflicts` / `validate_schedule`; validator catches 5 hand-made broken schedules (tests).
-**Depends on:** nothing — start first. Everyone else builds on this.
+### Katharina — Research + logistics (CSP formalisation, course link)
+**Does:** team contact/logistics (meetings, ILIAS deadlines, submissions). Research: the formal CSP model — variables, domains, unary vs binary constraints, constraint graph, search-space size — and the justification from Lecture 04 (why CSP, not A*/MDP/Bayes; what BT/MRV/FC/AC-3 are).
+**Produces:** `docs/formalisation.md` (2 pages, notation reused by proposal + tech doc), `docs/algorithms.md` (lecture pseudocode vs our implementation), deadline table in §2 kept current.
+**Done when:** every constraint in the doc maps 1-to-1 to a line in `csp.py` (`build_domains`, `conflicts`, `validate_schedule`); each solver in `solvers/` is explained with its lecture slide reference.
+**Depends on:** nothing — start first; reviews Immanuvel's code against the formalisation.
 
-### Member 3 — Solver algorithms (Backtracking → MRV → FC → AC-3)
-**Does:** implements and explains the solver ladder exactly as in Lecture 04; keeps all variants in one engine so the comparison is fair; adds the search trace used by the UI.
-**Produces:** `src/clinicflow/solvers/*`, `tests/test_solvers.py`, `tests/test_unsatisfiable.py`, a 1-page `docs/algorithms.md` (pseudocode from the lecture + what we changed).
-**Done when:** all 5 solvers return the same solved/infeasible status on all instances; schedules pass the validator; `BT+MRV+FC` uses ≤ nodes than `BT` on every instance; AC-3 (MAC) is optional but if present has a test.
-**Depends on:** Member 2's `csp.py` interface (`build_domains`, `conflicts`).
+### Immanuvel — Technical development (solvers, app, integration)
+**Does:** owns the code: `csp.py`, the solver ladder in one engine (`backtracking_search` with `ordering` and `inference` switches), the search trace, the Streamlit demo, CLI, packaging, PR reviews/merges into `main`.
+**Produces:** `src/clinicflow/*`, `app/streamlit_app.py`, `tests/`, README "run in 3 commands", 60-second demo recording as pitch-day backup.
+**Done when:** all 5 solvers agree on solved/infeasible on every instance; every schedule passes the independent validator; `BT+MRV+FC` ≤ `BT` nodes on every instance; fresh clone → `pip install -e .[app,dev]` → `streamlit run app/streamlit_app.py` works on Windows and Mac.
+**Depends on:** Katharina's formalisation (interfaces already fixed by the backup, so can start day 1).
 
-### Member 4 — Data, scenarios & evaluation
-**Does:** builds realistic instances (small hand-made, medium/large generated, one impossible), runs the benchmark, produces the table and plot that go on the results slide and in the tech doc.
-**Produces:** `data/*.json`, `src/clinicflow/generator.py`, `benchmarks/run_benchmarks.py`, `benchmarks/results/results.csv` + `nodes.png`, `docs/evaluation.md` (method, seeds, table, 3 bullet findings, limitations).
-**Done when:** benchmark reproducible from fixed seeds; table has nodes / backtracks / checks / runtime per solver per instance; at least 5 random seeds reported as mean; impossible case correctly flagged by all solvers.
-**Depends on:** Members 2 & 3.
+### Louis — Evaluation (data, benchmarks, results)
+**Does:** builds the scenarios (hand-made small, generated medium/large with fixed seeds, impossible), runs the benchmark, produces the table/plot for the results slide and tech doc, writes the honest findings (e.g. AC-3/MAC prunes nothing extra here but costs 2× checks).
+**Produces:** `data/*.json`, `generator.py` tuning, `benchmarks/results/results.csv` + `nodes.png`, `docs/evaluation.md` (method, seeds, table, 3 findings, limitations).
+**Done when:** benchmark reproducible from seeds; nodes / backtracks / checks / runtime per solver per instance; ≥ 5 random seeds reported as mean; impossible case flagged by all solvers.
+**Depends on:** Immanuvel's solvers (available now).
 
-### Member 5 — Demo application & integration
-**Does:** Streamlit app (load case → inspect CSP → solve → timetable + metrics + trace → infeasibility explanation); CLI; packaging (`pip install -e .`); README "run in 3 commands".
-**Produces:** `app/streamlit_app.py`, `src/clinicflow/__main__.py`, `README.md`, a 60-second screen recording of the demo (backup if Wi-Fi/laptop fails on pitch day).
-**Done when:** fresh clone → `pip install -e .[app]` → `streamlit run app/streamlit_app.py` works on Windows and Mac; every rubric "inspectable output" (CSP, schedule, metrics, trace) is visible in the UI.
-**Depends on:** Members 2–4 interfaces (already fixed by the backup, so can start day 1).
-
-### Member 6 — Documentation, proposal & QA
-**Does:** writes the Technical Proposal (Phase 2, 6 fixed sections) and the final Technical Documentation (3–5 pages); runs QA: tests, reproduces the benchmark, reads every doc against the rubric.
-**Produces:** `docs/technical_proposal.md`, `docs/technical_documentation.md`, QA checklist in `docs/qa_checklist.md`, limitations + V2 section.
-**Done when:** proposal submitted on time; tech doc contains formalisation, algorithms, evaluation, limitations, how-to-run, honest AI-assistance disclosure; QA checklist all ticked the day before the pitch.
-**Depends on:** everyone — but the skeleton exists in `PROJECT_PACKAGE.md`.
-
-*5-person team:* merge Member 6 into Members 1 (proposal/doc) and 4 (QA).
+### Emma — Documentation + QA (proposal, tech doc)
+**Does:** writes the Technical Proposal (Phase 2, 6 fixed sections) and the final Technical Documentation (3–5 pages); runs QA: tests, reproduces the benchmark, reads every doc and slide against the rubric.
+**Produces:** `docs/technical_proposal.md`, `docs/technical_documentation.md`, `docs/qa_checklist.md`, limitations + V2 section, AI-assistance disclosure.
+**Done when:** proposal submitted on time; tech doc contains formalisation, algorithms, evaluation, limitations, how-to-run; QA checklist all ticked the day before the pitch.
+**Depends on:** everyone — skeletons exist in `PROJECT_PACKAGE.md`.
 
 ## 2. Timeline (dependency order, not calendar — fit to ILIAS due dates)
 
 | Week | Milestone | Owner(s) | Gate |
 |---|---|---|---|
-| W1 | Team Charter + problem pitch (1 page) submitted | M1, M6 | Submitted on ILIAS |
-| W1 | Formalisation v1 + `csp.py` + validator | M2 | `tests/test_constraints.py` green |
-| W2 | Basic Backtracking + MRV + small & impossible cases | M3, M4 | All tests green, both cases correct |
-| W2–3 | Technical Proposal (2–3 pages) | M6 with M2/M3 | Submitted; uses formalisation notation |
-| W3 | Forward Checking + medium/large generator | M3, M4 | FC ≤ BT nodes on every instance |
-| W4 | Streamlit demo v1 + CLI + README | M5 | Fresh clone runs in 3 commands |
-| W4 | **Mid-build check-in** (live demo + metrics) | M1 presents, all | Instructor feedback logged in `docs/checkin_notes.md` |
-| W5 | Benchmark table + plot; AC-3/MAC (stretch) | M4, M3 | `results.csv`, `nodes.png`, 5 seeds |
-| W6 | Tech doc draft; deck numbers updated; demo recording | M6, M1, M5 | Internal review against rubric |
+| W1 | Team Charter + problem pitch (1 page) submitted | Pranamya, Emma | Submitted on ILIAS |
+| W1 | Formalisation v1 + `csp.py` + validator | Katharina | `tests/test_constraints.py` green |
+| W2 | Basic Backtracking + MRV + small & impossible cases | Immanuvel, Louis | All tests green, both cases correct |
+| W2–3 | Technical Proposal (2–3 pages) | Emma with Katharina/Immanuvel | Submitted; uses formalisation notation |
+| W3 | Forward Checking + medium/large generator | Immanuvel, Louis | FC ≤ BT nodes on every instance |
+| W4 | Streamlit demo v1 + CLI + README | Immanuvel | Fresh clone runs in 3 commands |
+| W4 | **Mid-build check-in** (live demo + metrics) | Pranamya presents, all | Instructor feedback logged in `docs/checkin_notes.md` |
+| W5 | Benchmark table + plot; AC-3/MAC (stretch) | Louis, Immanuvel | `results.csv`, `nodes.png`, 5 seeds |
+| W6 | Tech doc draft; deck numbers updated; demo recording | Emma, Pranamya, Immanuvel | Internal review against rubric |
 | W7 | QA, rehearsals ×2, final submission | all | Checklist ticked, deck < 6 min |
 
 ## 3. Backup: the whole solution (already built, in this repo)
@@ -86,7 +80,7 @@ Everything below exists on `main` today so the team can never be blocked:
 | Streamlit demo | `app/streamlit_app.py` | done |
 | Tests (26) | `tests/` | green |
 | Pitch deck (with in-browser demo) + project package | `index.html`, `PROJECT_PACKAGE.md` | done |
-| Formalisation / algorithms / evaluation / proposal / tech-doc text | `docs/` | **to write** (M2, M3, M4, M6) — skeletons in `PROJECT_PACKAGE.md` |
+| Formalisation / algorithms / evaluation / proposal / tech-doc text | `docs/` | **to write** (Katharina, Louis, Emma) — skeletons in `PROJECT_PACKAGE.md` |
 
 Reference numbers from the backup (`python benchmarks/run_benchmarks.py`), large case = 40 appointments, 6 doctors, 5 rooms, 16 slots:
 
@@ -106,16 +100,15 @@ Impossible case: all solvers report `infeasible`; FC detects it at node 1, plain
 
 | Member | Piece | Branch | Status | Blocker |
 |---|---|---|---|---|
-| M1 | | | | |
-| M2 | | | | |
-| M3 | | | | |
-| M4 | | | | |
-| M5 | | | | |
-| M6 | | | | |
+| Emma | proposal, tech doc, QA | | | |
+| Immanuvel | solvers, app, integration | | | |
+| Katharina | formalisation, algorithms doc, logistics | | | |
+| Louis | data, benchmarks, evaluation doc | | | |
+| Pranamya | pitch, demo script, deck | | | |
 
 ## 5. Q&A prep — each member must be able to answer
-- M2: "Why is this a CSP and not A* or an MDP?" — deterministic, fully observable, no sequential reward; we need *any* consistent assignment, not a path.
-- M3: "What does forward checking add over backtracking?" — prunes neighbours' domains after each assignment; detects dead-ends immediately (0 backtracks vs 209 833 on the large case).
-- M3: "What is AC-3 / MAC and why is it slower here?" — propagates through the whole constraint graph; more checks per node (112 k vs 57 k) with no extra pruning on our instances — honest finding.
-- M4: "How do you know the schedule is correct?" — independent validator written separately from the solvers; 26 tests; impossible case.
-- M1/M6: "Limitations?" — single-slot appointments, hard constraints only, no preferences/optimisation (V2: soft constraints via weighted CSP / local search min-conflicts).
+- Katharina: "Why is this a CSP and not A* or an MDP?" — deterministic, fully observable, no sequential reward; we need *any* consistent assignment, not a path.
+- Immanuvel: "What does forward checking add over backtracking?" — prunes neighbours' domains after each assignment; detects dead-ends immediately (0 backtracks vs 209 833 on the large case).
+- Immanuvel: "What is AC-3 / MAC and why is it slower here?" — propagates through the whole constraint graph; more checks per node (112 k vs 57 k) with no extra pruning on our instances — honest finding.
+- Louis: "How do you know the schedule is correct?" — independent validator written separately from the solvers; 26 tests; impossible case.
+- Pranamya/Emma: "Limitations?" — single-slot appointments, hard constraints only, no preferences/optimisation (V2: soft constraints via weighted CSP / local search min-conflicts).
