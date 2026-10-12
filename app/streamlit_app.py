@@ -43,7 +43,7 @@ with st.sidebar:
     st.header("2. Solver")
     chosen = st.multiselect("Compare", list(SOLVERS), default=["BT", "BT+MRV", "BT+MRV+FC"])
     time_limit = st.slider("Time limit per solver (s)", 1, 60, 10)
-    run = st.button("Solve", type="primary", use_container_width=True)
+    run = st.button("Solve", type="primary", width="stretch")
 
 st.subheader(instance.name)
 if instance.description:
@@ -63,20 +63,24 @@ with st.expander("Inspect CSP: variables, domains, constraints"):
     st.dataframe(pd.DataFrame(
         [{"appointment": a.id, "patient": a.patient, "specialty": a.specialty,
           "equipment": ", ".join(a.required_equipment), "domain size": len(doms[a.id])}
-         for a in instance.appointments]), use_container_width=True, hide_index=True)
+         for a in instance.appointments]), width="stretch", hide_index=True)
 
 if run:
     if not chosen:
         st.warning("Pick at least one solver.")
         st.stop()
-    results = {}
     with st.spinner("Solving..."):
-        for name in chosen:
-            results[name] = SOLVERS[name](instance, time_limit_s=float(time_limit), keep_trace=True)
+        st.session_state["results"] = {
+            name: SOLVERS[name](instance, time_limit_s=float(time_limit), keep_trace=True) for name in chosen
+        }
+        st.session_state["results_for"] = instance.name
+
+results = st.session_state.get("results") if st.session_state.get("results_for") == instance.name else None
+if results:
     st.subheader("Solver comparison")
     df = pd.DataFrame([r.row() for r in results.values()])
     df["runtime_ms"] = (df.pop("runtime_s") * 1000).round(2)
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, width="stretch", hide_index=True)
     if len(results) > 1:
         st.bar_chart(df.set_index("solver")[["nodes", "backtracks"]])
 
@@ -95,7 +99,7 @@ if run:
         st.subheader(f"Timetable ({best_name})")
         st.success("Independent validator: schedule is conflict-free" if not errs else f"Validator errors: {errs}")
         grid = timetable_grid(instance, res.assignment)
-        st.dataframe(pd.DataFrame(grid[1:], columns=grid[0]), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(grid[1:], columns=grid[0]), width="stretch", hide_index=True)
         st.download_button("Download schedule JSON",
                            json.dumps({k: v._asdict() for k, v in res.assignment.items()}, indent=2),
                            "schedule.json")
