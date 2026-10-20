@@ -4,7 +4,7 @@ Intro to AI (University of Bern) team project. Appointments are modelled as a **
 and solved with the Lecture-04 ladder **Backtracking → MRV → Forward Checking → AC-3 (MAC)**, with metrics
 (nodes, backtracks, constraint checks, runtime) to compare them.
 
-- Pitch deck (iPad-friendly, with live in-browser demo): https://immanuvelprathap.github.io/ClinicFlow/ (or https://raw.githack.com/immanuvelprathap/ClinicFlow/main/index.html)
+- Pitch deck: https://immanuvelprathap.github.io/ClinicFlow/ (or https://raw.githack.com/immanuvelprathap/ClinicFlow/main/index.html)
 - Project package (charter, proposal skeleton, templates): [`PROJECT_PACKAGE.md`](PROJECT_PACKAGE.md)
 - Team work plan + backup plan: [`TEAM_PLAN.md`](TEAM_PLAN.md)
 
